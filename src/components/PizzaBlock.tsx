@@ -3,43 +3,45 @@ import React, { FC, useState } from 'react'
 interface PizzaBlockProps {
     title: string
     price: number
+    imageUrl: string
+    sizes: number[]
+    types: number[]
 }
 
 const PizzaBlock: FC<PizzaBlockProps> = (props) => {
     const {
         title,
-        price
+        price,
+        imageUrl,
+        sizes,
+        types
     } = props
 
-    const [pizzaCount, setPizzaCount] = useState(0)
+    const [activeType, setActiveType] = useState(0)
+    const [activeSize, setActiveSize] = useState(0)
 
-    const pizzaCountIncrease = (): void => {
-        setPizzaCount(pizzaCount + 1)
-    }
-
+    const typeNames: string[] = ['тонкое', 'традиционное']
     return (
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+                src={imageUrl}
                 alt="Pizza"
             />
             <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    <li className="active">тонкое</li>
-                    <li>традиционное</li>
+                    {/* eslint-disable-next-line react/jsx-key */}
+                    {types.map((typeId, i) => <li className={activeType === i ? 'active' : ''} onClick={() => setActiveType(i)}>{typeNames[typeId]}</li>)}
                 </ul>
                 <ul>
-                    <li className="active">26 см.
-                    </li>
-                    <li>30 см.</li>
-                    <li>40 см.</li>
+                    {/* eslint-disable-next-line react/jsx-key */}
+                    {sizes.map((size, i) => <li className={activeSize === i ? 'active' : ''} onClick={() => setActiveSize(i)}>{size} см.</li>)}
                 </ul>
             </div>
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">от {price} ₽</div>
-                <button className="button button--outline button--add" onClick={pizzaCountIncrease}>
+                <button className="button button--outline button--add">
                     <svg
                         width="12"
                         height="12"
@@ -53,7 +55,7 @@ const PizzaBlock: FC<PizzaBlockProps> = (props) => {
                         />
                     </svg>
                     <span>Добавить</span>
-                    <i>{pizzaCount}</i>
+                    <i>0</i>
                 </button>
             </div>
         </div>

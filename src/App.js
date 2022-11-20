@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Categories from './components/Categories'
 import Sort from './components/Sort'
 import PizzaBlock from './components/PizzaBlock'
+import pizzas from './assets/pizzas.json'
 import './scss/app.scss'
 
 function App () {
@@ -17,8 +18,8 @@ function App () {
                     </div>
                     <h2 className="content__title">Все пиццы</h2>
                     <div className="content__items">
-                        <PizzaBlock title = "Арабская" price = {500}/>
-                        <PizzaBlock title = "Мексиканская" price = {350}/>
+                        {/* eslint-disable-next-line react/jsx-key */}
+                        {pizzas.map(obj => <PizzaBlock {... obj}/>)}
                     </div>
                 </div>
             </div>
